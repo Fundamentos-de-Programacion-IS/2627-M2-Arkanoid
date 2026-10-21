@@ -11,17 +11,22 @@ Para no empezar desde cero, se entrega un fichero `arkanoid_game.py` con la estr
 
 ## Cómo se evalúa este hito
 
-Este hito **no puntúa por sí solo**. Forma parte de tu nota de teoría de dos maneras:
+Este hito **no puntúa por sí solo**. Cumple dos funciones:
 
-- **Requisito**: debe estar **entregado en plazo** y **ejecutarse sin errores**.
+- **Derecho a asiento en el Control 1** (martes 17 nov): tienes que haberlo **entregado en
+  plazo** y el proyecto tiene que **ejecutarse sin errores**. Se comprueba entrega por entrega:
+  si no arranca, no cuenta como entregada y no hay asiento.
 - **Bonus**: el conjunto de los tres hitos puede aportar hasta **+0,5** sobre la nota de
   teoría por calidad y extras, según la rúbrica común.
 
 La nota de teoría sale de los **dos controles individuales de laboratorio**
-(martes 17 nov y martes 15 dic), que se corrigen de forma **automática** y usan el mismo
-formato que el examen práctico de enero. Los controles se plantean **sobre el dominio de
+(martes 17 nov y martes 15 dic), de 110 minutos cada uno y con el mismo formato que el
+examen práctico de enero. Los controles se plantean **sobre el dominio de
 este hito**: cuanto mejor entiendas el código que has escrito aquí, menos te costará el
 control.
+
+> **Lo que pone la nota son los controles.** Este hito no da nota por sí solo: es la llave para
+> poder presentarte a ellos.
 
 > Trabajad el proyecto vosotros. Lo que no sepáis escribir sin ayuda no lo sabréis escribir
 > en el laboratorio, que es donde se pone la nota.
@@ -71,31 +76,31 @@ incluye varios métodos y constantes auxiliares:
 ## Ejercicios
 Completa los métodos marcados con `TODO` siguiendo el orden propuesto y respetando las anotaciones de tipo. Se recomienda leer los docstrings de cada método en `arkanoid_game.py` para entender mejor los requisitos.
 
-1. **`cargar_nivel`** *(1 punto)*  
+1. **`cargar_nivel`**  
    Lee el fichero indicado en `level_path` y devuelve la cuadrícula como una lista de cadenas. Debes validar que el fichero existe y que todas las filas tienen la misma longitud.  
    *Pistas:* `Path.read_text` (lee el fichero completo como texto), `splitlines()` (separa en filas), control de excepciones y comprobación de anchura con `len`.
 
-2. **`preparar_entidades`** *(1 punto)*  
+2. **`preparar_entidades`**  
    Inicializa la paleta, la bola y las variables de puntuación/vidas. La paleta debe aparecer centrada en la parte inferior y la bola justo encima, lista para salir disparada.  
    *Pistas:* usa `self.crear_rect` para configurar la paleta, `Vector2` para la bola y llama a `self.reiniciar_bola()` para dejarla lista sobre la paleta.
 
-3. **`crear_bloques`** *(1.5 puntos)*  
+3. **`crear_bloques`**  
    A partir de la cuadrícula generada en el paso 1, crea los rectángulos de `pygame` que representarán los bloques. Almacénalos en `self.blocks` junto con la información necesaria para dibujarlos (color, puntuación, etc.).  
    *Pistas:* apóyate en `self.calcular_posicion_bloque` para obtener cada `Rect` y rellena las listas `self.blocks`, `self.block_colors` y `self.block_symbols`.
 
-4. **`procesar_input`** *(2 puntos)*  
+4. **`procesar_input`**  
    Gestiona la entrada del usuario moviendo la paleta. Debes contemplar las teclas de dirección izquierda/derecha (o `A/D`) y mantener la paleta dentro de los límites de la pantalla.  
    *Pistas:* obtén el estado de teclado con `self.obtener_estado_teclas()` y utiliza las constantes `self.KEY_LEFT`, `self.KEY_RIGHT`, `self.KEY_A`, `self.KEY_D`. Ajusta `self.paddle.x` respetando los límites de la pantalla.
 
-5. **`actualizar_bola`** *(2 puntos)*  
+5. **`actualizar_bola`**  
    Calcula el movimiento de la bola en cada fotograma, aplicando una velocidad inicial y rebotes con paredes, paleta y bloques. Cuando impacte contra un bloque, elimínalo y suma la puntuación correspondiente.  
    *Pistas:* tras mover `self.ball_pos`, obtén el rectángulo de colisión con `self.obtener_rect_bola()`. Usa `Rect.colliderect` contra paleta y bloques, invirtiendo las componentes de `self.ball_velocity` según corresponda y actualiza puntuación/vidas.
 
-6. **`dibujar_escena`** *(1.5 puntos)*  
+6. **`dibujar_escena`**  
    Dibuja fondo, bloques, paleta, bola y marcadores (puntuación y vidas). Aprovecha este método para centralizar todo el renderizado y mantener legible el bucle principal.  
    *Pistas:* rellena el fondo con `self.screen.fill(...)` y utiliza `self.dibujar_rectangulo`, `self.dibujar_circulo` y `self.dibujar_texto` para renderizar cada elemento.
 
-7. **`run`** *(1 punto)*  
+7. **`run`**  
    Implementa el bucle de juego principal: inicializa `pygame`, llama a los métodos anteriores en el orden correcto, controla los FPS con `Clock.tick` y detecta las condiciones de victoria o derrota.  
    *Pistas:* recorre `self.iterar_eventos()` vigilando `self.EVENT_QUIT` y `self.EVENT_KEYDOWN`. Tras cada actualización llama a `self.actualizar_pantalla()` y limita la velocidad con `self.clock.tick(self.FPS)`. Usa `self.finalizar_pygame()` al cerrar.
 
